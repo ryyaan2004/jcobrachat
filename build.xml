@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jCobraChat" default="deploy" basedir=".">
+	<property environment="env" />
+	<property name="warName" value="jCobraChat" />
+	<property name="dist.dir" value="dist" />
+	<property name="build.dir" value="build" />
+	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
+	<property name="jboss.deploy.dir" value="standalone/deployments" />
+	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
+	
+	<target name="init">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist"/>
+	</target>
+	
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="compile" depends="init">
+		<javac destdir="${build.dir}/classes" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+		
+	<target name="war" depends="clean,compile">
+		<war destfile="${dist.dir}/${warName}.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="${build.dir}/classes"/>
+		</war>
+	</target>
+	
+	<!-- deploy to jboss -->
+	<target name="clean">
+		<delete dir="dist"/>
+		<delete dir="build"/>
+	</target>
+	
+	<target name="deploy" depends="war">
+		<!-- remove currently deployed war -->
+		<delete file="/${deployed.war}.deployed" failonerror="false" />
+		<waitfor maxwait="10" maxwaitunit="second">
+			<available file="/${deployed.war}.undeployed"/>
+		</waitfor>
+		
+		<!-- copy war file to deployment directory-->
+		<copy file="${dist.dir}/${warName}.war" todir="/${JBOSS_HOME}/{jboss.deploy.dir}" />
+		
+		<!-- start deployment process -->
+		<echo>start deployment ...</echo>
+		<touch file="/${deployed.war}.dodeploy" />
+		
+		<!-- wait for deployment completion -->
+		<waitfor maxwait="10" maxwaitunit="second">
+			<available file="/${deployed.war}.deployed" />
+		</waitfor>
+		<echo>deployment complete!</echo>
+	</target>
+</project>

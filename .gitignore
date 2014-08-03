@@ -1,0 +1,12 @@
+*.class
+bin/
+build/
+.git
+.settings
+.project
+
+# Package Files #
+*.jar
+*.war
+*.ear
+project.properties
