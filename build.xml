@@ -47,7 +47,7 @@
 		</waitfor>
 		
 		<!-- copy war file to deployment directory-->
-		<copy file="${dist.dir}/${warName}.war" todir="/${JBOSS_HOME}/{jboss.deploy.dir}" />
+		<copy file="${dist.dir}/${warName}.war" todir="/${JBOSS_HOME}/${jboss.deploy.dir}" />
 		
 		<!-- start deployment process -->
 		<echo>start deployment ...</echo>
