@@ -12,6 +12,10 @@
 		<mkdir dir="build/classes"/>
 		<mkdir dir="dist"/>
 	</target>
+	
+	<condition property="isLinux">
+	                    <os family="unix" />
+ 	</condition>
 			
 	<path id="compile.classpath">
 		<fileset dir="WebContent/WEB-INF/lib" >
@@ -27,8 +31,12 @@
 			<classpath refid="compile.classpath"/>
 		</javac>
 	</target>
+			
+	<target name="copy-oauth" if="isLinux">
+		<copy file="/build-secret/${warName}/oauth.properties" todir="WebContent/WEB-INF/classes" />
+	</target>
 		
-	<target name="war" depends="clean,compile">
+	<target name="war" depends="clean,copy-oauth,compile">
 		<war destfile="${dist.dir}/${warName}.war" webxml="WebContent/WEB-INF/web.xml">
 			<fileset dir="WebContent"/>
 			<lib dir="WebContent/WEB-INF/lib"/>

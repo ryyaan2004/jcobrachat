@@ -10,5 +10,4 @@ lib/
 *.jar
 *.war
 *.ear
-project.properties
 oauth.properties
