@@ -45,8 +45,10 @@
 		<waitfor maxwait="10" maxwaitunit="second">
 			<available file="/${deployed.war}.undeployed"/>
 		</waitfor>
-		
+
 		<!-- copy war file to deployment directory-->
+		<delete file="/${deployed.war}" failonerror="false" />
+		<delete dir="/${deployed.war}" failonerror="false" />
 		<copy file="${dist.dir}/${warName}.war" todir="/${JBOSS_HOME}/${jboss.deploy.dir}" />
 		
 		<!-- start deployment process -->

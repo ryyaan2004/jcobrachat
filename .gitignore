@@ -1,6 +1,7 @@
 *.class
 bin/
 build/
+lib/
 .git
 .settings
 .project
@@ -10,3 +11,4 @@ build/
 *.war
 *.ear
 project.properties
+oauth.properties
