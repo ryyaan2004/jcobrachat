@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		else if ( requestUrl.contains(props.getOauthValue(Constants.TWITTER_AUTH_URL)) ){
 			log.error("A request for the TWITTER auth url has been received");
 		}
-		else if (requestUrl.contains(props.getOauthValue(Constants.CALLBACK_URI)) ){
+		else if (requestUrl.contains(props.getOauthValue(Constants.OAUTH_CALLBACK_URI)) ){
 			log.error("A response from GOOGLE has been received");
 			OAuthHelper helper = new OAuthHelper();
 			//log.error(helper.getUserInfoJson(request.getParameter(Constants.CODE)));
