@@ -34,7 +34,9 @@
 			
 	<target name="copy-oauth" if="isLinux">
 		<copy file="/build-secret/${warName}/oauth.properties" todir="WebContent/WEB-INF/classes" />
-		<copy file="/build-lib/${warName}/*.jar" todir="WebContent/WEB-INF/lib" />
+		<copy todir="WebContent/WEB-INF/lib" >
+			<fileset dir="/build-lib/${warName}"/>
+		</copy>
 	</target>
 		
 	<target name="war" depends="clean,copy-oauth,compile">
