@@ -69,6 +69,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("chat.jsp");
 		}
 		else{
+			log.error("The requestUrl:=" + requestUrl);
 			response.sendRedirect(contextPath + "/index.jsp");
 		}
 		
