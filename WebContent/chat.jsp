@@ -119,7 +119,7 @@
         </footer>
     </div>
     	
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!--<script src='/socket.io/socket.io.js'></script>
     <script src='/scripts/socketScript.js'></script>-->
     
