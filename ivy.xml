@@ -3,7 +3,7 @@
 	
 	<configurations defaultconfmapping="compile->default" >
 		<conf name="compile" description="Required for compilation"/>
-		<conf name="runtime" description="Additional runtime dependencies" extends="compile"/>
+		<conf name="runtime" description="Additional runtime dependencies" />
 		<conf name="test" description="Required only for tests" extends="runtime"/>
 		<conf name="war" description="Libraries to include in the war"/>
 	</configurations>
@@ -13,11 +13,26 @@
 	</publications>
 	
 	<dependencies>
-		<dependency org="com.fasterxml.jackson" name="jackson-parent" rev="2.5.1" conf="compile->default"/>
-		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.6.0-rc3" conf="compile->default"/>
-		<dependency org="com.google.api-client" name="google-api-client" rev="1.20.0" conf="compile->default"/>
-		<dependency org="com.google.apis" name="google-api-services-oauth2" rev="v1-rev41-1.14.2-beta" conf="compile->default"/>
+		<dependency org="com.fasterxml.jackson" name="jackson-parent" rev="2.5.1" conf="runtime->*;compile->default"/>
+		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.1.5" conf="runtime->*;compile->default"/>
+		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.0.6" conf="runtime->*;compile->default" />
+		
+		<dependency org="com.google.api-client" name="google-api-client" rev="1.19.0" conf="runtime->*;compile->default"/>
+		<dependency org="com.google.apis" name="google-api-services-oauth2" rev="v1-rev77-1.19.0" conf="runtime->*;compile->default"/>
+		<dependency org="com.google.api-client" name="google-api-client-jackson2" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.api-client" name="google-api-client-servlet" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.http-client" name="google-http-client" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.http-client" name="google-http-client-jackson2" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.oauth-client" name="google-oauth-client" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.oauth-client" name="google-oauth-client-servlet" rev="1.19.0" conf="runtime->*;compile->default" />
+		
+		
+		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="compile->default" />
+		<dependency org="log4j" name="log4j" rev="1.2.16" conf="compile->default" />
 		<dependency org="org.jboss.spec" name="jboss-javaee-6.0" rev="3.0.3.Final" conf="compile->default" />
+		<dependency org="org.jboss.spec.javax.servlet" name="jboss-servlet-api_3.0_spec" rev="1.0.0.Final" conf="compile->default" />
+		<dependency org="org.jboss.logging" name="jboss-logging" rev="3.1.0.GA" conf="compile->default" />
+		<dependency org="javax.transaction" name="transaction-api" rev="1.1" conf="compile->default" />
 		<dependency org="xalan" name="xalan" rev="2.7.2" conf="compile->default" />
 		<dependency org="jboss" name="jboss-common-client" rev="3.2.3" conf="compile->default" />
 	</dependencies>

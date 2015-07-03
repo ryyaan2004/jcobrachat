@@ -30,29 +30,26 @@
 	<ivy:settings/>
 	
 	<target name="init">
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir.lib}" />
+		<mkdir dir="${build.dir}/WebContent/WEB-INF/lib" />
+		
 		<ivy:resolve/>
+		<ivy:retrieve pattern="${build.dir}/WebContent/WEB-INF/lib/[artifact]-[revision].[ext]" 
+			file="ivy.xml" type="jar" conf="runtime"/>
+		<ivy:retrieve pattern="lib/[artifact]-[revision].[ext]" file="ivy.xml" type="jar" />
 		
 		<ivy:report todir="${ivy.reports.dir}" graph="false" xml="false"/>
 		
 		<ivy:cachepath pathid="compile.path" conf="compile"/>
 		<ivy:cachepath pathid="runtime.path" conf="runtime"/>
-		
-		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${dist.dir}" />
-		<mkdir dir="${build.dir}" />
-		<mkdir dir="${build.dir.lib}" />
 	</target>
 	
 	<condition property="isLinux">
 	                    <os family="unix" />
  	</condition>
-	
-	<!--<path id="autoivy.classpath">
-		<fileset> dir="${build.dir.lib}">
-			<include name="**/*.jar"/>
-		</fileset>
-		<pathelement location="${build.dir}/ivy-${ivy.version}.jar" />
-	</path>-->
 	
 	<target name="compile" depends="init">
 		<javac destdir="${build.dir}/classes" debug="true" srcdir="src" target="1.7">
@@ -67,7 +64,13 @@
 		</copy>
 	</target>
 		
-	<target name="war" depends="clean,copy-oauth,compile">
+	<target name="build" depends="clean,copy-oauth,compile">
+		<copy todir="${build.dir}/WebContent" >
+			<fileset dir="WebContent" />
+		</copy>
+	</target>
+		
+	<target name="war" depends="build">
 		<war destfile="${dist.dir}/${warName}.war" webxml="WebContent/WEB-INF/web.xml">
 			<fileset dir="WebContent"/>
 			<classes dir="${build.dir}/classes"/>
