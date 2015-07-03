@@ -2,6 +2,7 @@
 bin/
 build/
 lib/
+dist/
 .git
 .settings
 .project

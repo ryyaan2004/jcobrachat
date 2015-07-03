@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="jCobraChat" default="deploy" basedir=".">
+<project name="jCobraChat" default="deploy" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property environment="env" />
 	<property name="warName" value="jCobraChat" />
+	<property name="organization" value="org.ryyaan2004" />
+	<property name="ivy.version" value="2.4.0" />
+	
 	<property name="dist.dir" value="dist" />
 	<property name="build.dir" value="build" />
+	<property name="build.dir.lib" value="${build.dir}/lib" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	
 	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
+	<property name="ivy.home" value="${env.IVY_HOME}" />
+	
 	<property name="jboss.deploy.dir" value="standalone/deployments" />
 	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
+	<property name="src.dir" location="src/org/ryyaan2004"/>
+	<property name="classes.dir" location="${build.dir}/classes"/>
+	<property name="ivy.reports.dir" location="${build.dir}/ivy-reports"/>
+	
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+		<classpath>
+			<fileset dir="${ivy.home}">
+				<include name="*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+	
+	<ivy:settings/>
 	
 	<target name="init">
-		<mkdir dir="build/classes"/>
-		<mkdir dir="dist"/>
+		<ivy:resolve/>
+		
+		<ivy:report todir="${ivy.reports.dir}" graph="false" xml="false"/>
+		
+		<ivy:cachepath pathid="compile.path" conf="compile"/>
+		<ivy:cachepath pathid="runtime.path" conf="runtime"/>
+		
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir.lib}" />
 	</target>
 	
 	<condition property="isLinux">
 	                    <os family="unix" />
  	</condition>
-			
-	<path id="compile.classpath">
-		<fileset dir="WebContent/WEB-INF/lib" >
-			<include name="*.jar"/>
+	
+	<!--<path id="autoivy.classpath">
+		<fileset> dir="${build.dir.lib}">
+			<include name="**/*.jar"/>
 		</fileset>
-		<fileset dir="/build-lib/${warName}" >
-			<include name="*.jar" />
-		</fileset>
-	</path>
+		<pathelement location="${build.dir}/ivy-${ivy.version}.jar" />
+	</path>-->
 	
 	<target name="compile" depends="init">
-		<javac destdir="${build.dir}/classes" debug="true" srcdir="src">
-			<classpath refid="compile.classpath"/>
+		<javac destdir="${build.dir}/classes" debug="true" srcdir="src" target="1.7">
+			<classpath refid="compile.path" />
 		</javac>
 	</target>
 			
@@ -42,7 +70,6 @@
 	<target name="war" depends="clean,copy-oauth,compile">
 		<war destfile="${dist.dir}/${warName}.war" webxml="WebContent/WEB-INF/web.xml">
 			<fileset dir="WebContent"/>
-			<lib dir="WebContent/WEB-INF/lib"/>
 			<classes dir="${build.dir}/classes"/>
 		</war>
 	</target>
@@ -53,7 +80,7 @@
 		<delete dir="build"/>
 	</target>
 	
-	<target name="deploy" depends="war">
+	<target name="deploy" depends="war, publish">
 		<!-- remove currently deployed war -->
 		<delete file="/${deployed.war}.deployed" failonerror="false" />
 		<waitfor maxwait="10" maxwaitunit="second">
@@ -74,5 +101,11 @@
 			<available file="/${deployed.war}.deployed" />
 		</waitfor>
 		<echo>deployment complete!</echo>
+	</target>
+	
+	<target name="publish" description="publish jar to the local repo" depends="war">
+		<ivy:publish resolver="local" >
+			<artifacts pattern="${dist.dir}/[artifact].[ext]" />
+		</ivy:publish>
 	</target>
 </project>

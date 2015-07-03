@@ -1,0 +1,26 @@
+<ivy-module version="2.0">
+	<info organisation="org.ryyaan2004" module="jcobrachat"/>
+	
+	<configurations defaultconfmapping="compile->default" >
+		<conf name="compile" description="Required for compilation"/>
+		<conf name="runtime" description="Additional runtime dependencies" extends="compile"/>
+		<conf name="test" description="Required only for tests" extends="runtime"/>
+		<conf name="war" description="Libraries to include in the war"/>
+	</configurations>
+	
+	<publications>
+		<artifact name="jCobraChat" type="war" />
+	</publications>
+	
+	<dependencies>
+		<dependency org="com.fasterxml.jackson" name="jackson-parent" rev="2.5.1" conf="compile->default"/>
+		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.6.0-rc3" conf="compile->default"/>
+		<dependency org="com.google.api-client" name="google-api-client" rev="1.20.0" conf="compile->default"/>
+		<dependency org="com.google.apis" name="google-api-services-oauth2" rev="v1-rev41-1.14.2-beta" conf="compile->default"/>
+		<dependency org="org.jboss.spec" name="jboss-javaee-6.0" rev="3.0.3.Final" conf="compile->default" />
+		<dependency org="xalan" name="xalan" rev="2.7.2" conf="compile->default" />
+		<dependency org="jboss" name="jboss-common-client" rev="3.2.3" conf="compile->default" />
+	</dependencies>
+	
+	
+</ivy-module>
