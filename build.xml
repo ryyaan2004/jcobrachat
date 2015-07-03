@@ -71,8 +71,8 @@
 	</target>
 		
 	<target name="war" depends="build">
-		<war destfile="${dist.dir}/${warName}.war" webxml="WebContent/WEB-INF/web.xml">
-			<fileset dir="WebContent"/>
+		<war destfile="${dist.dir}/${warName}.war" webxml="${build.dir}/WebContent/WEB-INF/web.xml">
+			<fileset dir="${build.dir}/WebContent"/>
 			<classes dir="${build.dir}/classes"/>
 		</war>
 	</target>
