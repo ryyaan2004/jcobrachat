@@ -1,5 +1,7 @@
 package org.ryyaan2004.chat;
 
+import org.ryyaan2004.chat.util.Constants;
+
 public class Message {
 	private String senderName = null;
 	private String message = null;

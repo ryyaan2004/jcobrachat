@@ -1,4 +1,4 @@
-package org.ryyaan2004.chat;
+package org.ryyaan2004.chat.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

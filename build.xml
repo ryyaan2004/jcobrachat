@@ -53,20 +53,28 @@
 	                    <os family="unix" />
  	</condition>
 	
+	<condition property="isWindows">
+						<os family="windows" />
+	</condition>
+	
 	<target name="compile" depends="init">
 		<javac destdir="${build.dir}/classes" debug="true" srcdir="src" target="1.7">
 			<classpath refid="compile.path" />
 		</javac>
 	</target>
 			
-	<target name="copy-oauth" if="isLinux">
+	<target name="oauth-linux" if="isLinux">
 		<copy file="/build-secret/${warName}/oauth.properties" todir="WebContent/WEB-INF/classes" />
-		<copy todir="WebContent/WEB-INF/lib" >
+		<!-- <copy todir="WebContent/WEB-INF/lib" >
 			<fileset dir="/build-lib/${warName}"/>
-		</copy>
+		</copy> -->
+	</target>
+	
+	<target name="oauth-win" if="isWindows" >
+		<copy file="D:\java\inc\oauth.properties" todir="${build.dir}/WebContent/WEB-INF/classes" />
 	</target>
 		
-	<target name="build" depends="clean,copy-oauth,compile">
+	<target name="build" depends="clean,compile, oauth-linux, oauth-win">
 		<tstamp>
 			<format property="build.time" pattern="MM/dd/yyyy HH:mm " />
 		</tstamp>

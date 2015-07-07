@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
+import org.ryyaan2004.chat.util.ChatProperties;
+import org.ryyaan2004.chat.util.Constants;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -62,6 +64,7 @@ public class LoginServlet extends HttpServlet {
 			ObjectMapper mapper = new ObjectMapper();
 			Participant p = mapper.readValue(json, Participant.class);
 			session = request.getSession();
+			session.setAttribute(Constants.USER,p);
 			session.setAttribute("name", p.getName());
 			session.setAttribute("email", p.getEmail());
 			session.setAttribute("title", "jCobra Chat Rooms List");

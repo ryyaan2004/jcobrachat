@@ -1,4 +1,4 @@
-package org.ryyaan2004.chat;
+package org.ryyaan2004.chat.util;
 
 public class Constants {
 	public static String EMPTY_STRING = "";
@@ -15,4 +15,5 @@ public class Constants {
 	public static String OAUTH_CALLBACK_URI = "OAUTH_CALLBACK_URI";
 	public static String CODE = "code";
 	public static String STATE = "state";
+	public static String USER = "USER";
 }

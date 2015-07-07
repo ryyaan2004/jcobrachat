@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.ryyaan2004.chat.util.Constants;
+
 public class Room {
 
 	private String name = null;

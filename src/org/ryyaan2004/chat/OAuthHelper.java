@@ -16,6 +16,9 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
+import org.ryyaan2004.chat.util.ChatProperties;
+import org.ryyaan2004.chat.util.Constants;
+
 public class OAuthHelper {
 	private ChatProperties props = ChatProperties.getInstance();
 	

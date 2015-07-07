@@ -11,4 +11,3 @@ dist/
 *.jar
 *.war
 *.ear
-oauth.properties
