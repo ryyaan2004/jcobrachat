@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		props = ChatProperties.getInstance();
 		
 		if ( requestUrl.contains(props.getOauthValue(Constants.GOOGLE_AUTH_URL)) ){
-			log.error("A request for the GOOGLE auth url has been received");
+			log.debug("A request for the GOOGLE auth url has been received");
 			OAuthHelper helper = new OAuthHelper();
 			String url = helper.buildLoginUrl();
 			session = request.getSession();
@@ -52,10 +52,10 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(url);
 		}
 		else if ( requestUrl.contains(props.getOauthValue(Constants.TWITTER_AUTH_URL)) ){
-			log.error("A request for the TWITTER auth url has been received");
+			log.debug("A request for the TWITTER auth url has been received");
 		}
 		else if (requestUrl.contains(props.getOauthValue(Constants.OAUTH_CALLBACK_URI)) ){
-			log.error("A response from GOOGLE has been received");
+			log.debug("A response from GOOGLE has been received");
 			OAuthHelper helper = new OAuthHelper();
 			//log.error(helper.getUserInfoJson(request.getParameter(Constants.CODE)));
 			String json = helper.getUserInfoJson(request.getParameter(Constants.CODE));
@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("chat.jsp");
 		}
 		else{
-			log.error("The requestUrl:=" + requestUrl);
+			log.debug("The requestUrl:=" + requestUrl);
 			response.sendRedirect(contextPath + "/index.jsp");
 		}
 		
