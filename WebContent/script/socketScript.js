@@ -1,6 +1,7 @@
 jQuery(function ($) {
 	var userName = window.userName;
-	var socket = openSocket();
+	var socket = '';
+	socket = openSocket(socket);
 //		socket.send("userName",{userName:userName});
 	var $messageSend = $('#messageSend');
 	var	$messageInput = $('#messageInput');
@@ -103,15 +104,15 @@ jQuery(function ($) {
 		}
 	}
 	
-	function openSocket(){
-        // Ensures only one connection is open at a time
-        if(socket !== undefined && socket.readyState !== WebSocket.CLOSED){
-           writeResponse("WebSocket is already opened.");
-            return;
-        }
-        // Create a new instance of the websocket
-        return socket = new WebSocket("ws://localhost:8080/chat/nest");
-	}
+//	function openSocket(){
+//        // Ensures only one connection is open at a time
+//        if(socket !== undefined && socket.readyState !== WebSocket.CLOSED){
+//           writeResponse("WebSocket is already opened.");
+//            return;
+//        }
+//        // Create a new instance of the websocket
+//        return socket = new WebSocket("ws://localhost:8080/chat/nest");
+//	}
 	
 	function closeSocket(){
         socket.close();

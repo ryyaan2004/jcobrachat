@@ -1,6 +1,15 @@
 <!DOCTYPE html>
-<% 	String name = session.getAttribute("name").toString();
+<%@ page import="org.ryyaan2004.chat.util.ChatProperties" %>
+<%@ page import="org.ryyaan2004.chat.util.Constants" %>
+<% 	
+	ChatProperties props = ChatProperties.getInstance();
+    String callbackUri = props.getOauthValue(Constants.CALLBACK_URI);
+    
+    String name = session.getAttribute("name").toString();
 	String title = session.getAttribute("title").toString();
+	String protocol = request.getScheme().equals("HTTPS") ? "wss://" : "ws://";
+	String socketUri = protocol + (callbackUri.contains("localhost") ? "localhost:8080/chat/nest" : "ryyaan2004.org/chat/nest");
+	
 %>
 <html>
   <head>
@@ -16,7 +25,18 @@
     <script type="text/javascript">
           userName = "<%= name %>";
           user_file = '';
-      </script>
+    </script>
+    <script type="text/javascript">
+	function openSocket(socket){
+        // Ensures only one connection is open at a time
+        if( typeof socket == 'WebSocket' && socket.readyState !== WebSocket.CLOSED){
+           writeResponse("WebSocket is already opened.");
+            return;
+        }
+        // Create a new instance of the websocket
+        return socket = new WebSocket("<%= socketUri %>");
+	}
+    </script>
   </head>
   <body>
       
