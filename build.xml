@@ -14,6 +14,7 @@
 	
 	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
 	<property name="ivy.home" value="${env.IVY_HOME}" />
+	<property name="oauth.path" value="${env.OAUTH_DIR}/${warName}/oauth.properties" />
 	
 	<property name="jboss.deploy.dir" value="standalone/deployments" />
 	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
@@ -73,8 +74,12 @@
 	<target name="oauth-win" if="isWindows" >
 		<copy file="D:\java\inc\oauth.properties" todir="${build.dir}/WebContent/WEB-INF/classes" />
 	</target>
+	
+	<target name="copy-oauth" >
+		<copy file="${oauth.path}" todir="${build.dir}/WebContent/WEB-INF/classes" />
+    </target>
 		
-	<target name="build" depends="clean,compile, oauth-linux, oauth-win">
+	<target name="build" depends="clean,compile, copy-oauth">
 		<tstamp>
 			<format property="build.time" pattern="MM/dd/yyyy HH:mm " />
 		</tstamp>
