@@ -7,7 +7,7 @@
     
     String name = session.getAttribute("name").toString();
 	String title = session.getAttribute("title").toString();
-	String protocol = request.getScheme().equals("HTTPS") ? "wss://" : "ws://";
+	String protocol = request.getScheme().equalsIgnoreCase("HTTPS") ? "wss://" : "ws://";
 	String socketUri = protocol + (callbackUri.contains("localhost") ? "localhost:8080/chat/nest" : "ryyaan2004.org/chat/nest");
 	
 %>
