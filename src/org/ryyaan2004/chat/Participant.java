@@ -1,6 +1,7 @@
 package org.ryyaan2004.chat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.ryyaan2004.chat.util.Constants;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Participant {
@@ -12,6 +13,7 @@ public class Participant {
 	private String email = null;
 	private long loginTime = -1;
 	private long roomEntryTime = -1;
+	private boolean isAuthenticated = false;
 	
 	/**
 	* Participant constructor
@@ -166,5 +168,13 @@ public class Participant {
 	
 	public String getFamily_name(){
 		return this.last_name;
+	}
+
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
 	}
 }

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
+import org.ryyaan2004.chat.util.ChatProperties;
+import org.ryyaan2004.chat.util.Constants;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 		props = ChatProperties.getInstance();
 		
 		if ( requestUrl.contains(props.getOauthValue(Constants.GOOGLE_AUTH_URL)) ){
-			log.error("A request for the GOOGLE auth url has been received");
+			log.debug("A request for the GOOGLE auth url has been received");
 			OAuthHelper helper = new OAuthHelper();
 			String url = helper.buildLoginUrl();
 			session = request.getSession();
@@ -52,16 +54,17 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect(url);
 		}
 		else if ( requestUrl.contains(props.getOauthValue(Constants.TWITTER_AUTH_URL)) ){
-			log.error("A request for the TWITTER auth url has been received");
+			log.debug("A request for the TWITTER auth url has been received");
 		}
 		else if (requestUrl.contains(props.getOauthValue(Constants.OAUTH_CALLBACK_URI)) ){
-			log.error("A response from GOOGLE has been received");
+			log.debug("A response from GOOGLE has been received");
 			OAuthHelper helper = new OAuthHelper();
 			//log.error(helper.getUserInfoJson(request.getParameter(Constants.CODE)));
 			String json = helper.getUserInfoJson(request.getParameter(Constants.CODE));
 			ObjectMapper mapper = new ObjectMapper();
 			Participant p = mapper.readValue(json, Participant.class);
 			session = request.getSession();
+			session.setAttribute(Constants.USER,p);
 			session.setAttribute("name", p.getName());
 			session.setAttribute("email", p.getEmail());
 			session.setAttribute("title", "jCobra Chat Rooms List");
@@ -69,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("chat.jsp");
 		}
 		else{
-			log.error("The requestUrl:=" + requestUrl);
+			log.debug("The requestUrl:=" + requestUrl);
 			response.sendRedirect(contextPath + "/index.jsp");
 		}
 		

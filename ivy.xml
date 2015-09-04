@@ -26,13 +26,17 @@
 		<dependency org="com.google.oauth-client" name="google-oauth-client" rev="1.19.0" conf="runtime->*;compile->default" />
 		<dependency org="com.google.oauth-client" name="google-oauth-client-servlet" rev="1.19.0" conf="runtime->*;compile->default" />
 		
-		
 		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="compile->default" />
 		<dependency org="log4j" name="log4j" rev="1.2.16" conf="compile->default" />
+		
 		<dependency org="org.jboss.spec" name="jboss-javaee-7.0" rev="1.0.3.Final" conf="compile->default" />
 		<dependency org="org.jboss.spec.javax.servlet" name="jboss-servlet-api_3.0_spec" rev="1.0.0.Final" conf="compile->default" />
 		<dependency org="org.jboss.logging" name="jboss-logging" rev="3.1.0.GA" conf="compile->default" />
+		<dependency org="org.jboss.spec.javax.websocket" name="jboss-websocket-api_1.0_spec" rev="1.0.0.Final" conf="compile->default" />
+		
 		<dependency org="javax.transaction" name="transaction-api" rev="1.1" conf="compile->default" />
+		<dependency org="javax.websocket" name="javax.websocket-api" rev="1.0" conf="compile->default" />
+		
 		<dependency org="xalan" name="xalan" rev="2.7.2" conf="compile->default" />
 		<dependency org="jboss" name="jboss-common-client" rev="3.2.3" conf="compile->default" />
 	</dependencies>

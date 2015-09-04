@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import org.jboss.logging.Logger;
+import org.ryyaan2004.chat.util.Constants;
 
 public class ManageChatServlet extends HttpServlet{
 	private static final Logger log = Logger.getLogger(ManageChatServlet.class);
