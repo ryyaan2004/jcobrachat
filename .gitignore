@@ -6,6 +6,7 @@ dist/
 .git
 .settings
 .project
+.classpath
 
 # Package Files #
 *.jar

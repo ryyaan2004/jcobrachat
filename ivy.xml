@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <ivy-module version="2.0">
 	<info organisation="org.ryyaan2004" module="jcobrachat"/>
 	
@@ -25,6 +27,7 @@
 		<dependency org="com.google.http-client" name="google-http-client-jackson2" rev="1.19.0" conf="runtime->*;compile->default" />
 		<dependency org="com.google.oauth-client" name="google-oauth-client" rev="1.19.0" conf="runtime->*;compile->default" />
 		<dependency org="com.google.oauth-client" name="google-oauth-client-servlet" rev="1.19.0" conf="runtime->*;compile->default" />
+		<dependency org="com.google.code.gson" name="gson" rev="2.3.1" conf="runtime->*;compile->default" />
 		
 		<dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="compile->default" />
 		<dependency org="log4j" name="log4j" rev="1.2.16" conf="compile->default" />
@@ -39,6 +42,7 @@
 		
 		<dependency org="xalan" name="xalan" rev="2.7.2" conf="compile->default" />
 		<dependency org="jboss" name="jboss-common-client" rev="3.2.3" conf="compile->default" />
+
 	</dependencies>
 	
 	

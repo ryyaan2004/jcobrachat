@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <project name="jCobraChat" default="deploy" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property environment="env" />
 	<property name="warName" value="jCobraChat" />
@@ -14,8 +15,8 @@
 	
 	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
 	<property name="ivy.home" value="${env.IVY_HOME}" />
-	<property name="oauth.path" value="${env.OAUTH_DIR}/${warName}/oauth.properties" />
-	
+	<property name="oauth.path" value="WebContent/WEB-INF/classes/oauth.properties" /> <!-- ${env.OAUTH_DIR}/${warName}/ -->
+
 	<property name="jboss.deploy.dir" value="standalone/deployments" />
 	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
 	<property name="src.dir" location="src/org/ryyaan2004"/>
@@ -141,7 +142,7 @@
 		</waitfor>
 		<echo>deployment complete!</echo>
 	</target>
-	
+	 
 	<target name="publish" description="publish jar to the local repo" depends="war">
 		<ivy:publish resolver="local" >
 			<artifacts pattern="${dist.dir}/[artifact].[ext]" />
