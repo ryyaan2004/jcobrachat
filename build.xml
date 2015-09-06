@@ -15,7 +15,7 @@
 	
 	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
 	<property name="ivy.home" value="${env.IVY_HOME}" />
-	<property name="oauth.path" value="WebContent/WEB-INF/classes/oauth.properties" /> <!-- ${env.OAUTH_DIR}/${warName}/ -->
+	<property name="oauth.path" value="${env.OAUTH_DIR}/${warName}/oauth.properties" />
 
 	<property name="jboss.deploy.dir" value="standalone/deployments" />
 	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
@@ -43,6 +43,7 @@
 		<ivy:resolve/>
 		<ivy:retrieve pattern="${build.dir}/WebContent/WEB-INF/lib/[artifact]-[revision].[ext]" 
 			file="ivy.xml" type="jar" conf="runtime"/>
+		
 		<ivy:retrieve pattern="lib/[artifact]-[revision].[ext]" file="ivy.xml" type="jar" />
 		
 		<ivy:report todir="${ivy.reports.dir}" graph="false" xml="false"/>
