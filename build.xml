@@ -15,7 +15,7 @@
 	
 	<property name="JBOSS_HOME" value="${env.JBOSS_HOME}" />
 	<property name="ivy.home" value="${env.IVY_HOME}" />
-	<property name="oauth.path" value="${env.OAUTH_DIR}/${warName}/oauth.properties" />
+	<property name="project-includes" value="${env.PROJECT_INCLUDES}/${warName}" />
 
 	<property name="jboss.deploy.dir" value="standalone/deployments" />
 	<property name="deployed.war" value="${JBOSS_HOME}/${jboss.deploy.dir}/${warName}.war" />
@@ -77,11 +77,13 @@
 		<copy file="D:\java\inc\oauth.properties" todir="${build.dir}/WebContent/WEB-INF/classes" />
 	</target>
 	
-	<target name="copy-oauth" >
-		<copy file="${oauth.path}" todir="${build.dir}/WebContent/WEB-INF/classes" />
+	<target name="copy-project-includes">
+		<copy todir="${build.dir}/WebContent/WEB-INF/classes">
+			<fileset dir="${project-includes}" includes="**/*.properties"/>
+		</copy>
     </target>
 		
-	<target name="build" depends="clean,compile, copy-oauth">
+	<target name="build" depends="clean,compile, copy-project-includes">
 		<tstamp>
 			<format property="build.time" pattern="MM/dd/yyyy HH:mm " />
 		</tstamp>
