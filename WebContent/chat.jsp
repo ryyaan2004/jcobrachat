@@ -25,17 +25,7 @@
     <script type="text/javascript">
           userName = "<%= name %>";
           user_file = '';
-    </script>
-    <script type="text/javascript">
-	function openSocket(socket){
-        // Ensures only one connection is open at a time
-        if( typeof socket == 'WebSocket' && socket.readyState !== WebSocket.CLOSED){
-           writeResponse("WebSocket is already opened.");
-            return;
-        }
-        // Create a new instance of the websocket
-        return socket = new WebSocket("<%= socketUri %>");
-	}
+          SOCKET_ENDPOINT = "<%= socketUri %>";
     </script>
   </head>
   <body>
