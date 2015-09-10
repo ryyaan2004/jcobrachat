@@ -40,15 +40,25 @@ jQuery(function ($) {
 	});
 	
 	socket.onmessage = function(event) {
-		var eventData = JSON.parse(event.data);
-		// Parse the various event types and call 
-		// the appropriate handler function
-		
-		if ( eventData.msgType == 'new-message' ) {
-			onNewMessage(eventData)
+		var eventData = "";
+		if ( !event.data.startsWith('{') )
+		{
+			eventData = event.data;
+			handlePlainText(eventData);
 		}
-		else if ( eventData.msgType == 'user-list' ) {
-			onUserList(eventData)
+		else
+		{
+			eventData = JSON.parse(event.data);
+		
+			// Parse the various event types and call 
+			// the appropriate handler function
+			
+			if ( eventData.msgType == 'new-message' ) {
+				onNewMessage(eventData)
+			}
+			else if ( eventData.msgType == 'user-list' ) {
+				onUserList(eventData)
+			}
 		}
 	};
 
@@ -99,20 +109,11 @@ jQuery(function ($) {
             sendMe.displayName = $displayName.val();
 			sendMe.image = userImg.files.length > 0 ? window.user_file : "false";
 			sendMe.msgType = 'new-message';
+			socket = ensureOpenSocket(socket);
 			socket.send(JSON.stringify(sendMe));
 			$messageInput.val('');		
 		}
 	}
-	
-//	function openSocket(){
-//        // Ensures only one connection is open at a time
-//        if(socket !== undefined && socket.readyState !== WebSocket.CLOSED){
-//           writeResponse("WebSocket is already opened.");
-//            return;
-//        }
-//        // Create a new instance of the websocket
-//        return socket = new WebSocket("ws://localhost:8080/chat/nest");
-//	}
 	
 	function closeSocket(){
         socket.close();
@@ -120,5 +121,35 @@ jQuery(function ($) {
 
     function writeResponse(text){
         messages.innerHTML += "<br/>" + text;
+    }
+    
+    function ensureOpenSocket(socket) {
+    	if ( socket === 'undefined' || 
+    		 socket.readyState === WebSocket.CLOSED || 
+    		 socket.readyState === WebSocket.CLOSING )
+    	{
+    		socket = openSocket(socket);
+    	}
+    	return socket;
+    }
+    
+    function openSocket(socket){
+        // Ensures only one connection is open at a time
+        if( typeof socket == 'WebSocket' && socket.readyState !== WebSocket.CLOSED){
+           writeResponse("WebSocket is already opened.");
+            return;
+        }
+        // Create a new instance of the websocket
+        return socket = new WebSocket(SOCKET_ENDPOINT);
+	}
+    
+    function handlePlainText(plainTextMessage)
+    {
+    	var data = {};
+    	data.timestamp = new Date();
+    	data.message = plainTextMessage;
+    	data.displayName = 'System Message';
+    	data.image = 'false';
+    	onNewMessage(data);
     }
 });
