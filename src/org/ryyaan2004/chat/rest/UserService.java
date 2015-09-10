@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.ryyaan2004.chat.dao.UserDAO;
+import org.ryyaan2004.chat.dao.UserDao;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +21,7 @@ public class UserService {
   public Response getAllUsers() {
 
     Gson gsonBuilder = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    JsonElement jsonElement = gsonBuilder.toJsonTree( UserDAO.getAllUsers() );
+    JsonElement jsonElement = gsonBuilder.toJsonTree( UserDao.getAllUsers() );
     JsonObject jsonObject = new JsonObject();
     jsonObject.add( "items", jsonElement );
     String json = gsonBuilder.toJson( jsonObject );

@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.ryyaan2004.chat.model.User;
 
-public class UserDAO {
+public class UserDao {
+  private static Logger log = Logger.getLogger(UserDao.class);
+  
   public static List< User > getAllUsers() {
-
     List< User > users = new ArrayList< User >();
     String selectUsers = "Select email, alias, firstname, lastname From users";
 
@@ -29,10 +31,8 @@ public class UserDAO {
 
     }
     catch ( SQLException e ) {
-
-      e.printStackTrace();
+      log.error("In UserDao#getAllUsers: A SQLException occurred", e);;
     }
     return users;
   }
-
 }
