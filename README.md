@@ -1,7 +1,6 @@
 jCobraChat
 =============
 
-[![Join the chat at https://gitter.im/ryyaan2004/jcobrachat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ryyaan2004/jcobrachat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # License
 The MIT License (MIT)
