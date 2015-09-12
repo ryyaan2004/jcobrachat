@@ -29,7 +29,6 @@ public class LoginServlet extends HttpServlet
     private static Oauth2 oauth2;
     private ChatProperties props;
 
-    /** This method just redirects user to a login page. */
     @Override
     public void doGet( HttpServletRequest request,
                        HttpServletResponse response ) throws ServletException, IOException
