@@ -63,7 +63,6 @@ public class LoginServlet extends HttpServlet
 
             OauthUser ou = (OauthUser) mapper.readValue( json, OauthUserFactory.getClassForProvider( oauthProvider ) );
             User user = new User( ou );
-            session = request.getSession();
             session.setAttribute( Constants.USER, user );
             session.setAttribute( "title", "jCobra Chat Rooms List" );
 
