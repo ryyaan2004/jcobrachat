@@ -31,6 +31,7 @@ public class User
 
     public User( OauthUser ou )
     {
+        this.oauthUser = ou;
         setEmail( ou.getEmail() );
         setFirstname( ou.getFirstName() );
         setLastname( ou.getLastName() );
