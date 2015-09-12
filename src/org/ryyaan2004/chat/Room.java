@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.ryyaan2004.chat.model.oauth.GoogleOauthUser;
 import org.ryyaan2004.chat.util.Constants;
 
 public class Room {
@@ -78,7 +79,7 @@ public class Room {
 	* Public adder for our list of Participants
 	* @param p - Participant object to add to the list
 	*/
-	public synchronized void addParticipant(Participant p)
+	public synchronized void addParticipant(GoogleOauthUser p)
 	{
 		if ( p != null && 
 				p.getName() != null 
@@ -104,9 +105,9 @@ public class Room {
 	* @param participantName - The name of the Participant to find
 	* @return Participant
 	*/
-	public Participant getParticipant(String participantName)
+	public GoogleOauthUser getParticipant(String participantName)
 	{
-		return (Participant)participants.get(participantName);
+		return (GoogleOauthUser)participants.get(participantName);
 	}
 	
 	/**
@@ -144,9 +145,9 @@ public class Room {
 	* Getter method for a simple Array of Participants
 	* @return Participant[]
 	*/
-	public Participant[] getParticipantArray()
+	public GoogleOauthUser[] getParticipantArray()
 	{
-		Participant[] participantsArray = new Participant[this.participants.size()];
+		GoogleOauthUser[] participantsArray = new GoogleOauthUser[this.participants.size()];
 		Set participantSet = getParticipants();
 		Iterator iter_p = participantSet.iterator();
 		int i = 0;
@@ -154,7 +155,7 @@ public class Room {
 		{
 			Map.Entry entry = (Map.Entry)iter_p.next();
 			String key = (String) entry.getKey();
-			participantsArray[i] = (Participant)entry.getValue();
+			participantsArray[i] = (GoogleOauthUser)entry.getValue();
 			i++;
 		}
 		return participantsArray;
