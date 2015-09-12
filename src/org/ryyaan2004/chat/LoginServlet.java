@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
+import org.ryyaan2004.chat.model.User;
 import org.ryyaan2004.chat.model.oauth.OauthUser;
 import org.ryyaan2004.chat.model.oauth.OauthUserFactory;
 import org.ryyaan2004.chat.util.ChatProperties;
@@ -61,10 +62,9 @@ public class LoginServlet extends HttpServlet
             ObjectMapper mapper = new ObjectMapper();
 
             OauthUser ou = (OauthUser) mapper.readValue( json, OauthUserFactory.getClassForProvider( oauthProvider ) );
+            User user = new User( ou );
             session = request.getSession();
-            session.setAttribute( Constants.USER, ou );
-            session.setAttribute( "name", ou.getName() );
-            session.setAttribute( "email", ou.getEmail() );
+            session.setAttribute( Constants.USER, user );
             session.setAttribute( "title", "jCobra Chat Rooms List" );
 
             response.sendRedirect( "chat.jsp" );
