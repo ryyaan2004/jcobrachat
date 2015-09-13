@@ -2,6 +2,9 @@ package org.ryyaan2004.chat;
 
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
+
+import org.ryyaan2004.chat.model.oauth.GoogleOauthUser;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
 
@@ -39,7 +42,7 @@ public class SessionListener implements HttpSessionAttributeListener{
 							Object participant = room.removeParticipant(nickname);
 							if (participant != null)
 							{
-								String n = ((Participant)participant).getName();
+								String n = ((GoogleOauthUser)participant).getName();
 							}
 							
 						}

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <%@ page import="org.ryyaan2004.chat.util.ChatProperties" %>
 <%@ page import="org.ryyaan2004.chat.util.Constants" %>
+<%@ page import="org.ryyaan2004.chat.model.User" %>
 <% 	
 	ChatProperties props = ChatProperties.getInstance();
     String callbackUri = props.getOauthValue(Constants.CALLBACK_URI);
+    User user = (User) session.getAttribute(Constants.USER);
     
-    String name = session.getAttribute("name").toString();
+    String name = user.getName();
 	String title = session.getAttribute("title").toString();
 	String protocol = callbackUri.contains("localhost") ? "ws://" : "wss://";
 	String socketUri = protocol + (callbackUri.contains("localhost") ? "localhost:8080/chat/nest" : "ryyaan2004.org/chat/nest");
