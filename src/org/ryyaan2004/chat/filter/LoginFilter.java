@@ -8,12 +8,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.ryyaan2004.chat.service.CookieService;
 import org.ryyaan2004.chat.util.Constants;
 
 public class LoginFilter implements Filter
@@ -39,10 +39,11 @@ public class LoginFilter implements Filter
         HttpSession session = request.getSession( false );
 
         String requestUri = request.getRequestURI();
+        CookieService cs = new CookieService();
 
-        if ( cookieExistsInRequest( request ) || cookieExistsInSession( session ) )
+        if ( cs.cookieExistsInRequest( request ) || cs.cookieExistsInSession( session ) )
         {
-            if ( !cookieExistsInSession( session ) )
+            if ( !cs.cookieExistsInSession( session ) )
             {
                 /*
                  * 1) Get the user from persistent storage
@@ -70,43 +71,5 @@ public class LoginFilter implements Filter
     {
         // TODO Auto-generated method stub
 
-    }
-
-    /**
-     * Checks the session for the cookie that indicates a login
-     * 
-     * @param session
-     * @return true if cookie exists
-     */
-    private boolean cookieExistsInSession( HttpSession session )
-    {
-        boolean truthiness = false;
-
-        if ( session != null && session.getAttribute( Constants.COOKIE ) != null )
-        {
-            truthiness = true;
-        }
-        return truthiness;
-    }
-
-    private boolean cookieExistsInRequest( HttpServletRequest req )
-    {
-        boolean truthiness = false;
-        Cookie[] cookies;
-
-        if ( req != null && req.getCookies() != null )
-        {
-            cookies = req.getCookies();
-
-            for ( Cookie cookie : cookies )
-            {
-                if ( Constants.COOKIE.equals( cookie.getName() ) )
-                {
-                    truthiness = true;
-                    break;
-                }
-            }
-        }
-        return truthiness;
     }
 }

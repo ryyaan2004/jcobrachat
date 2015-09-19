@@ -1,10 +1,8 @@
 package org.ryyaan2004.chat.action;
 
 import java.io.IOException;
-import java.util.Random;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +13,7 @@ import org.ryyaan2004.chat.OAuthHelper;
 import org.ryyaan2004.chat.model.User;
 import org.ryyaan2004.chat.model.oauth.OauthUser;
 import org.ryyaan2004.chat.model.oauth.OauthUserFactory;
+import org.ryyaan2004.chat.service.CookieService;
 import org.ryyaan2004.chat.util.ChatProperties;
 import org.ryyaan2004.chat.util.Constants;
 
@@ -79,7 +78,8 @@ public class LoginServlet extends HttpServlet
             OauthUser ou = (OauthUser) mapper.readValue( json, OauthUserFactory.getClassForProvider( oauthProvider ) );
             User user = new User( ou );
             session.setAttribute( Constants.USER, user );
-            addCookie( response, session );
+            CookieService cs = new CookieService();
+            cs.addCookie( response, session );
 
             /*
              * We sendRedirect to clear the /oauthcallback from the browsers url
@@ -92,26 +92,5 @@ public class LoginServlet extends HttpServlet
             log.debug( "The requestUrl:=" + requestUrl );
             response.sendRedirect( contextPath + "/index.jsp" );
         }
-    }
-
-    private void addCookie( HttpServletResponse res,
-                            HttpSession session )
-    {
-        Cookie cookie = createCookie();
-        res.addCookie( cookie );
-        addCookieToSession( cookie, session );
-    }
-
-    public void addCookieToSession( Cookie cookie,
-                                    HttpSession session )
-    {
-        session.setAttribute( Constants.COOKIE, cookie );
-    }
-
-    private Cookie createCookie()
-    {
-        Random rand = new Random();
-        int randInt = rand.nextInt();
-        return new Cookie( Constants.COOKIE, Constants.COOKIE_PREFIX + randInt );
     }
 }
