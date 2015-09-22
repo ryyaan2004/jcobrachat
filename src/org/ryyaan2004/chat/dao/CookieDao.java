@@ -16,7 +16,7 @@ public class CookieDao
                                long created_time,
                                long max_age )
     {
-        String sql = "INSERT INTO jcc_session(session_id, user_id, created_time, max_age)\n" +
+        String sql = "INSERT INTO jcc_http_session(session_id, user_id, created_time, max_age)\n" +
                      "VALUES( ?, ?, ?, ? );";
         /**
          * 1) Determine session_id, user_id, created_time, max_age from sessions
