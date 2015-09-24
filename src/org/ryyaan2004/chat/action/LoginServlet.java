@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 /**
@@ -45,6 +46,7 @@ public class LoginServlet extends HttpServlet
     private String contextPath = "";
     private static final String TWITTER_POST_REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token";
     private static final String charsetEncoding = "UTF-8";
+    private static final String twitterRequestTokenStr = "twitterRequestToken";
     private HttpSession session;
 
     private ChatProperties props;
@@ -87,7 +89,7 @@ public class LoginServlet extends HttpServlet
                            e );
             }
 
-            session.setAttribute( "twitterRequestToken", requestToken );
+            session.setAttribute( twitterRequestTokenStr, requestToken );
             response.sendRedirect( requestToken.getAuthenticationURL() );
 
         }
@@ -96,9 +98,35 @@ public class LoginServlet extends HttpServlet
             String oauthProvider = (String) session.getAttribute( provider );
             log.debug( "An oauth response has been received from: '" + oauthProvider + "'" );
 
-            // if ( OauthUserFactory.GOOGLE.equals( oauthProvider ) )
-            OAuthHelper helper = new OAuthHelper();
-            String json = helper.getUserInfoJson( request.getParameter( Constants.CODE ) );
+            OAuthHelper helper = null;
+            String json = null;
+            Twitter twitter = null;
+            RequestToken requestToken = null;
+            AccessToken accessToken = null;
+            String verifier = request.getParameter( "oauth_verifier" );
+
+            if ( OauthUserFactory.GOOGLE.equals( oauthProvider ) )
+            {
+                helper = new OAuthHelper();
+                json = helper.getUserInfoJson( request.getParameter( Constants.CODE ) );
+            }
+            else if ( OauthUserFactory.TWITTER.equals( oauthProvider ) )
+            {
+                twitter = TwitterFactory.getSingleton();
+                requestToken = (RequestToken) session.getAttribute( twitterRequestTokenStr );
+
+                try
+                {
+                    accessToken = twitter.getOAuthAccessToken( requestToken, verifier );
+                }
+                catch (TwitterException e)
+                {
+                    log.error( "In LoginServlet#doGet there was an error encountered parsing the response from Twitter",
+                               e );
+                    // TODO: redirect the response to an error page
+                }
+                json = accessToken.toString();
+            }
 
             ObjectMapper mapper = new ObjectMapper();
             OauthUser ou = (OauthUser) mapper.readValue( json, OauthUserFactory.getClassForProvider( oauthProvider ) );
