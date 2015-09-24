@@ -44,6 +44,8 @@
 		<dependency org="jboss" name="jboss-common-client" rev="3.2.3" conf="compile->default" />
 
 		<dependency org="org.postgresql" name="postgresql" rev="9.4-1202-jdbc42" conf="runtime->*;compile->default" />
+		
+		<dependency org="org.twitter4j" name="twitter4j-core" rev="4.0.4" conf="runtime->*;compile->default" />
 	</dependencies>
 	
 	
