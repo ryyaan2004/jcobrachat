@@ -75,20 +75,27 @@ public class LoginServlet extends HttpServlet
             log.debug( "A request for the TWITTER auth url has been received" );
             session.setAttribute( provider, OauthUserFactory.TWITTER );
             Twitter twitter = TwitterFactory.getSingleton();
-            twitter.setOAuthConsumer( props.getOauthValue( Constants.TWITTER_CONSUMER_KEY ),
-                                      props.getOauthValue( Constants.TWITTER_CONSUMER_SECRET ) );
+            try
+            {
+                twitter.setOAuthConsumer( props.getOauthValue( Constants.TWITTER_CONSUMER_KEY ),
+                                          props.getOauthValue( Constants.TWITTER_CONSUMER_SECRET ) );
+            }
+            catch( IllegalStateException e )
+            {
+                log.info( "The OAuthConsumer was already set",e );
+            }
             RequestToken requestToken = null;
 
             try
             {
-                requestToken = twitter.getOAuthRequestToken( Constants.OAUTH_CALLBACK_URI );
+                requestToken = twitter.getOAuthRequestToken( props.getOauthValue( Constants.CALLBACK_URI ) );
             }
             catch (TwitterException e)
             {
                 log.error( "In LoginServlet#doGet an error occurred during the attempt to retrieve a Twitter RequestToken",
                            e );
             }
-
+            
             session.setAttribute( twitterRequestTokenStr, requestToken );
             response.sendRedirect( requestToken.getAuthenticationURL() );
 
