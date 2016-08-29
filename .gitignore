@@ -11,3 +11,7 @@ dist/
 *.jar
 *.war
 *.ear
+
+# intellij files
+*.iml
+.idea/
